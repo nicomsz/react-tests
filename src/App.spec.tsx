@@ -10,15 +10,17 @@ describe('App', () => {
         expect(getByText('Rodz')).toBeInTheDocument()
         
     });
-    it('should be able to render the item', () => {
-
+    it('should be able to render the item', async () => {
+        const { getByPlaceholderText } = render( <App /> )
         const { getByText } = render( <App /> )
 
         const addButton = getByText('Adicionar')
+        const addInput = getByPlaceholderText('input')
 
-        userEvent.click(addButton)
+        await userEvent.type(addInput, 'Novo item')
+        await userEvent.click(addButton)
 
-        expect(getByText('Novo')).toBeInTheDocument()
+        expect(getByText('Novo item')).toBeInTheDocument()
 
     })
 })
