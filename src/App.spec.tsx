@@ -25,7 +25,7 @@ describe('App', () => {
 
     })
     it('should be able to remove the item', async () => {
-        const { getByText, getAllByText, getByPlaceholderText } = render( <App /> )
+        const { getByText, getAllByText, getByPlaceholderText, queryByText } = render( <App /> )
         const addButton = getByText('Adicionar')
         const removeButton = getAllByText('Remover')
 
@@ -37,7 +37,7 @@ describe('App', () => {
         })
         //ou utilizando a propriedade .not =
         //await waitFor(() => {
-         //   return expect(getByText('Diego')).not.toBeInTheDocument()
+         //   return expect(queryByText('Diego')).not.toBeInTheDocument()
         //})
     })
 })
