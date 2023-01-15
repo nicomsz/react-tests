@@ -5,17 +5,19 @@ import { List } from './list';
 
 describe('List', () => {
     it('should render the list items',async () => {
-        const { getByText, rerender, queryByText } = render( <List initialItems={['Diego', 'Mayk', 'Rodz']} />) 
+        const { getByText, queryByText } = render( <List initialItems={['Diego', 'Mayk', 'Rodz']} />) 
 
         expect(getByText('Mayk')).toBeInTheDocument()
         expect(getByText('Diego')).toBeInTheDocument()
         expect(getByText('Rodz')).toBeInTheDocument()
 
-        await rerender(<List initialItems={['Julia']} />)
+        const {rerender} = render(<List initialItems={['Julia']}/>)
+        
 
-        const {rerender} = render(<List />)
         expect(screen.getByText('Julia')).toBeInTheDocument()
         expect(screen.queryByText('Mayk')).not.toBeInTheDocument()
+        
+        
 
         
     });
