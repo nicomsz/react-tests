@@ -1,18 +1,27 @@
-import { getByText, render, waitFor, waitForElementToBeRemoved } from '@testing-library/react'
+import { getByText, render, waitFor, screen, waitForElementToBeRemoved } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import App from './App'
+import App from '../App'
+import { List } from './list';
 
-describe('App', () => {
-    it('should render the list items', () => {
-        const { getByText } = render( <App />) 
+describe('List', () => {
+    it('should render the list items',async () => {
+        const { getByText, rerender, queryByText } = render( <List initialItems={['Diego', 'Mayk', 'Rodz']} />) 
+
         expect(getByText('Mayk')).toBeInTheDocument()
         expect(getByText('Diego')).toBeInTheDocument()
         expect(getByText('Rodz')).toBeInTheDocument()
+
+        await rerender(<List initialItems={['Julia']} />)
+
+        const {rerender} = render(<List />)
+        expect(screen.getByText('Julia')).toBeInTheDocument()
+        expect(screen.queryByText('Mayk')).not.toBeInTheDocument()
+
         
     });
     it('should be able to render the item', async () => {
-        const { getByPlaceholderText } = render( <App /> )
-        const { getByText, findByText } = render( <App /> )
+        const { getByPlaceholderText } = render( <List initialItems={[]} /> )
+        const { getByText, findByText } = render( <List initialItems={[]} /> )
 
         const addButton = getByText('Adicionar')
         const addInput = getByPlaceholderText('input')
@@ -25,7 +34,7 @@ describe('App', () => {
 
     })
     it('should be able to remove the item', async () => {
-        const { getByText, getAllByText, getByPlaceholderText, queryByText } = render( <App /> )
+        const { getByText, getAllByText, getByPlaceholderText, queryByText } = render( <List initialItems={['Diego']} /> )
         const addButton = getByText('Adicionar')
         const removeButton = getAllByText('Remover')
 
